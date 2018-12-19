@@ -13,9 +13,13 @@ class AttentionPageBloc extends BlocBase{
     goRecommendController.sink.add(1);
   }
 
+
+
   @override
   void dispose() {
-
+    goRecommendController.close();
     super.dispose();
   }
 }
+
+final attentionPageBloc = AttentionPageBloc();

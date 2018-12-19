@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_zhihu_app/Pages/HomePage/Widgets/searchBar.dart';
 import 'package:flutter_zhihu_app/Pages/HomePage/AttentionPage.dart';
 import 'package:flutter_zhihu_app/Pages/HomePage/RecommendPage.dart';
+import 'package:flutter_zhihu_app/Blocs/attentionPage_bloc.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,10 +13,9 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  int _currentTapIndex = 0;
+
 
   TabController _tabController;
-
   final _tabs = [
     Text('关注', style: TextStyle(fontSize: 16)),
     Text('推荐', style: TextStyle(fontSize: 16)),
@@ -26,12 +26,11 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-
+    
     _tabController = TabController(length: _tabs.length, vsync: this);
-    _tabController.addListener(() {
-      setState(() {
-        _currentTapIndex = _tabController.index;
-      });
+
+    attentionPageBloc.goRecStream.listen((index){
+      _tabController.index = index;
     });
   }
 

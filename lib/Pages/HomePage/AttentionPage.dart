@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_zhihu_app/Pages/HomePage/Widgets/CircleImage.dart';
 import 'package:flutter_zhihu_app/Configs/theme.dart';
 import 'package:flutter_zhihu_app/Pages/HomePage/Widgets/VideoPlayWidget.dart';
-import 'package:flutter_zhihu_app/Pages/HomePage/RecommendPage.dart';
+import 'package:flutter_zhihu_app/Blocs/attentionPage_bloc.dart';
 
 class AttentionPage extends StatefulWidget {
   @override
@@ -16,6 +16,7 @@ class AttentionPage extends StatefulWidget {
 class AttentionPageState extends State<AttentionPage> {
   int _attentionCount = 0;
   bool _attentionIstap = false;
+
 
   //创建叠加的头像
   buildImageStack(width) {
@@ -342,9 +343,10 @@ class AttentionPageState extends State<AttentionPage> {
                   style: TextStyle(fontSize: 16, color: AppTheme.color5),
                 ),
                 FlatButton(
-                    onPressed: () {
-                      
+                    onPressed: (){
+                      attentionPageBloc.jumpToRecommendPage();
                     },
+
                     child: Text('前往推荐',
                         style:
                             TextStyle(fontSize: 16, color: AppTheme.color9))),
@@ -391,5 +393,11 @@ class AttentionPageState extends State<AttentionPage> {
         },
       ),
     );
+  }
+
+  @override
+  void initState() {
+
+    super.initState();
   }
 }
