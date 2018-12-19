@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AppTheme{
-
+class AppTheme {
   static const color1 = Color(0xFFFFFFFF);
   static const color2 = Color(0xFF000000);
   static const color3 = Color(0xFF333333);
@@ -19,4 +18,14 @@ class AppTheme{
   static const color15 = Color(0xFF18EC18);
   static const color16 = Color(0xFFD9D9D9);
 
+  static const textStyleFont16Weight700 = TextStyle(
+    fontWeight: FontWeight.w700,
+    fontSize: 16,
+    color: Colors.black,
+  );
+  static const textStyleFont18Weight700 = TextStyle(
+    fontWeight: FontWeight.w700,
+    fontSize: 18,
+    color: Colors.black,
+  );
 }

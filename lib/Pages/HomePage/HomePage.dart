@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_zhihu_app/Pages/HomePage/Widgets/searchBar.dart';
 import 'package:flutter_zhihu_app/Pages/HomePage/AttentionPage.dart';
+import 'package:flutter_zhihu_app/Pages/HomePage/RecommendPage.dart';
+
 class HomePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return HomePageState();
   }
 }
@@ -25,6 +26,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+
     _tabController = TabController(length: _tabs.length, vsync: this);
     _tabController.addListener(() {
       setState(() {
@@ -32,6 +34,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       });
     });
   }
+
 
 
   @override
@@ -58,7 +61,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
         body: TabBarView(
           children: <Widget>[
             AttentionPage(),
-            Text('1'),
+            RecommendPage(),
             Text('2'),
             Text('3'),
 

@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 
 // 所有 BLoCs 的通用接口
 abstract class BlocBase {
-  void dispose();
+
+  void dispose(){
+
+  }
 }
 
 // 通用 BLoC provider
