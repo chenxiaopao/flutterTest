@@ -1,6 +1,7 @@
 import 'package:flutter_zhihu_app/Blocs/bloc_provider.dart';
 import 'dart:async';
-
+import 'package:flutter_zhihu_app/Widgets/dialogs.dart';
+import 'package:flutter/material.dart';
 class AttentionPageBloc extends BlocBase{
 
   final goRecommendController = StreamController<int>.broadcast();
@@ -13,6 +14,9 @@ class AttentionPageBloc extends BlocBase{
     goRecommendController.sink.add(1);
   }
 
+  void ShowNotInterestedDialogs(Widget child,AnimationController animationController,BuildContext context){
+    showInfo(child, animationController, context);
+  }
 
 
   @override

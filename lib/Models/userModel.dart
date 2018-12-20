@@ -4,24 +4,27 @@ part 'userModel.g.dart';
 
 @JsonSerializable()
 class UserModel {
+  String avatar;
 
-   final String avatar;
+  String userName;
 
-   final String userName;
+  String iconFlag;
 
-   final String iconFlag;
+  @JsonKey(nullable: true)
+  int userType;
 
-   final int userType;
+  int answerCount;
 
-   final int answerCount;
+  int attentionCount;
 
-   final int attentionCount;
+  int isAttentioned;
 
-   final int isAttentioned;
+  UserModel();
 
-   UserModel(this.userName,this.userType,this.answerCount,this.attentionCount,this.isAttentioned,{this.avatar,this.iconFlag});
+//   UserModel(this.userName,this.userType,this.answerCount,this.attentionCount,this.isAttentioned,{this.avatar,this.iconFlag});
 
-   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
-   Map<String, dynamic> toJson() => _$UserModelToJson(this);
+  factory UserModel.fromJson(Map<String, dynamic> json) =>
+      _$UserModelFromJson(json);
 
+  Map<String, dynamic> toJson() => _$UserModelToJson(this);
 }

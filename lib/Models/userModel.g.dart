@@ -7,14 +7,14 @@ part of 'userModel.dart';
 // **************************************************************************
 
 UserModel _$UserModelFromJson(Map<String, dynamic> json) {
-  return UserModel(
-      json['userName'] as String,
-      json['userType'] as int,
-      json['answerCount'] as int,
-      json['attentionCount'] as int,
-      json['isAttentioned'] as int,
-      avatar: json['avatar'] as String,
-      iconFlag: json['iconFlag'] as String);
+  return UserModel()
+    ..avatar = json['avatar'] as String
+    ..userName = json['userName'] as String
+    ..iconFlag = json['iconFlag'] as String
+    ..userType = json['userType'] as int
+    ..answerCount = json['answerCount'] as int
+    ..attentionCount = json['attentionCount'] as int
+    ..isAttentioned = json['isAttentioned'] as int;
 }
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
