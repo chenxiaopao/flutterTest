@@ -14,9 +14,7 @@ class AttentionPageBloc extends BlocBase{
     goRecommendController.sink.add(1);
   }
 
-  void ShowNotInterestedDialogs(Widget child,AnimationController animationController,BuildContext context){
-    showInfo(child, animationController, context);
-  }
+
 
 
   @override

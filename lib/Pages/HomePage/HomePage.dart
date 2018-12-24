@@ -4,7 +4,7 @@ import 'package:flutter_zhihu_app/Pages/HomePage/Widgets/searchBar.dart';
 import 'package:flutter_zhihu_app/Pages/HomePage/AttentionPage.dart';
 import 'package:flutter_zhihu_app/Pages/HomePage/RecommendPage.dart';
 import 'package:flutter_zhihu_app/Blocs/attentionPage_bloc.dart';
-
+import 'package:flutter_zhihu_app/Pages/HomePage/VideoPage.dart';
 class HomePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {

@@ -9,6 +9,8 @@ import 'package:flutter_zhihu_app/Blocs/user_bloc.dart';
 import 'package:flutter_zhihu_app/Models/userModel.dart';
 import 'package:flutter_zhihu_app/Pages/HomePage/Widgets/UnInterestedButton.dart';
 import 'dart:async';
+import 'package:flutter_zhihu_app/Widgets/dialogs.dart';
+
 class AttentionPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -19,11 +21,10 @@ class AttentionPage extends StatefulWidget {
 class AttentionPageState extends State<AttentionPage>
     with SingleTickerProviderStateMixin {
   int _attentionCount = 0;
-  AnimationController _animationController;
   final userBloc = UserBloc();
   List<UserModel> userList;
 
-  //创建叠加的头像
+  /*创建叠加的头像*/
   buildImageStack(width) {
     double overlayWidth = 10;
     return SizedBox(
@@ -134,12 +135,11 @@ class AttentionPageState extends State<AttentionPage>
                   return FlatButton.icon(
                     onPressed: () {
                       userBloc.singleAttentionAction(userList, index);
-                      Future.delayed(Duration(seconds: 2),(){
+                      Future.delayed(Duration(seconds: 2), () {
                         _attentionCount = 1;
                         setState(() {});
                       });
                     },
-
                     color: AppTheme.color7,
                     icon: userModel.isAttentioned == 1 && snapshot.data == -1
                         ? CupertinoActivityIndicator()
@@ -179,7 +179,7 @@ class AttentionPageState extends State<AttentionPage>
     );
   }
 
-  buildTopViewHasAttension() {
+  buildTopViewHasAttention() {
     return Column(
       children: <Widget>[
         Container(
@@ -305,11 +305,10 @@ class AttentionPageState extends State<AttentionPage>
             IconButton(
               icon: Icon(Icons.more_horiz),
               onPressed: () {
-                attentionPageBloc.ShowNotInterestedDialogs(
-                  UnInterestedButton((){
+                showUninterestedAlert(
+                  UnInterestedButton(() {
                     print(1);
                   }),
-                  _animationController,
                   context,
                 );
               },
@@ -334,12 +333,10 @@ class AttentionPageState extends State<AttentionPage>
                   width: 100,
                   child: FlatButton(
                     onPressed: () {
-                      userBloc.changeOthers();
+                      userBloc.getUserList();
                     },
-                    child: Text(
-                      '换一批',
-                      style: TextStyle(fontSize: 16, color: AppTheme.color9),
-                    ),
+                    child: Text('换一批',
+                        style: TextStyle(fontSize: 16, color: AppTheme.color9)),
                     shape: RoundedRectangleBorder(
                         side: BorderSide(color: AppTheme.color9),
                         borderRadius: BorderRadius.all(Radius.circular(5))),
@@ -354,8 +351,8 @@ class AttentionPageState extends State<AttentionPage>
                     textColor: AppTheme.color1,
                     onPressed: () {
                       userBloc.allAttentionAction(userList);
-                      Future.delayed(Duration(seconds: 2),(){
-                        _attentionCount =1;
+                      Future.delayed(Duration(seconds: 2), () {
+                        _attentionCount = 1;
                         setState(() {});
                       });
                     },
@@ -418,21 +415,36 @@ class AttentionPageState extends State<AttentionPage>
       child: StreamBuilder(
         stream: userBloc.changeUserStream,
         builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
-          userList = snapshot.hasData ? snapshot.data : userList;
-          return ListView.builder(
-            itemCount: userList.length + 1,
-            itemBuilder: (context, index) {
-              if (index == 0) {
-                return _attentionCount == 0
-                    ? buildTopViewNoAttention()
-                    : buildTopViewHasAttension();
-              }
-              index -= 1;
-              return _attentionCount == 0
-                  ? buildBottomViewNoAttention(index)
-                  : buildListCellHasAttention(index);
-            },
-          );
+          userList = snapshot.hasData ? snapshot.data : null;
+          return userList != null
+              ? RefreshIndicator(
+                  child: ListView.builder(
+                    itemCount: userList != null ? userList.length + 1 : 0,
+                    itemBuilder: (context, index) {
+                      if (index == 0) {
+                        return _attentionCount == 0
+                            ? buildTopViewNoAttention()
+                            : buildTopViewHasAttention();
+                      }
+                      index -= 1;
+                      return _attentionCount == 0
+                          ? buildBottomViewNoAttention(index)
+                          : buildListCellHasAttention(index);
+                    },
+                  ),
+                  onRefresh: userBloc.getUserList,
+                )
+              : Column(
+                  children: <Widget>[
+                    Container(
+                      width: 25,
+                      height: 25,
+                      child: CircularProgressIndicator(),
+                      margin: EdgeInsets.only(top: 10),
+                    ),
+                    Expanded(child: SizedBox())
+                  ],
+                );
         },
       ),
     );
@@ -441,8 +453,6 @@ class AttentionPageState extends State<AttentionPage>
   @override
   void initState() {
     super.initState();
-    _animationController =
-        AnimationController(duration: Duration(seconds: 1), vsync: this);
-    userList = userBloc.getUserData();
+    userBloc.getUserList();
   }
 }
