@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 
-
-
-
 class SearchBar extends StatelessWidget {
   final VoidCallback searchOnPressed;
   final VoidCallback requestOnPressed;
+  final String searchBarText;
+  final String rightBtnText;
+  final Icon rightIcon;
 
   bool searchIsTap;
   bool requestIsTap;
 
   SearchBar({
+    @required this.searchBarText,
+    this.rightBtnText='',
+    @required this.rightIcon,
     @required this.searchOnPressed,
     @required this.requestOnPressed,
   });
@@ -34,19 +37,14 @@ class SearchBar extends StatelessWidget {
                 Icons.search,
                 color: Colors.grey,
               ),
-              label: Text(
-                '我需要你收到',
-              ),
+              label: Text(searchBarText),
             ),
           ),
           FlatButton.icon(
             onPressed: requestOnPressed,
-            icon: Icon(
-              Icons.edit,
-              color: Colors.blue,
-            ),
+            icon: rightIcon,
             label: Text(
-              '提问',
+              rightBtnText,
               style: TextStyle(color: Colors.blue),
             ),
           ),

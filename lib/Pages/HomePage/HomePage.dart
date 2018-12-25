@@ -5,6 +5,7 @@ import 'package:flutter_zhihu_app/Pages/HomePage/AttentionPage.dart';
 import 'package:flutter_zhihu_app/Pages/HomePage/RecommendPage.dart';
 import 'package:flutter_zhihu_app/Blocs/attentionPage_bloc.dart';
 import 'package:flutter_zhihu_app/Pages/HomePage/VideoPage.dart';
+
 class HomePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -13,8 +14,6 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> with TickerProviderStateMixin {
-
-
   TabController _tabController;
   final _tabs = [
     Text('关注', style: TextStyle(fontSize: 16)),
@@ -26,15 +25,13 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    
+
     _tabController = TabController(length: _tabs.length, vsync: this);
 
-    attentionPageBloc.goRecStream.listen((index){
+    attentionPageBloc.goRecStream.listen((index) {
       _tabController.index = index;
     });
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +42,13 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
           elevation: 1.0,
           backgroundColor: Colors.white,
           brightness: Brightness.light,
-          title: SearchBar(searchOnPressed: () {}, requestOnPressed: () {}),
+          title: SearchBar(
+            searchBarText: '虐童事件',
+            rightIcon: Icon(Icons.keyboard,color: Colors.blue),
+            rightBtnText: '提问',
+            searchOnPressed: () {},
+            requestOnPressed: () {},
+          ),
           bottom: PreferredSize(
               child: TabBar(
                 labelPadding: EdgeInsets.only(bottom: 5),
@@ -63,7 +66,6 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
             RecommendPage(),
             Text('2'),
             Text('3'),
-
           ],
           controller: _tabController,
         ),
