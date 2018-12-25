@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_zhihu_app/Pages/MinePage/Widgets/CustomButton.dart';
 import 'package:flutter_zhihu_app/Configs/theme.dart';
+import 'package:flutter_zhihu_app/Widgets/seperateLine.dart';
 
 class MinePage extends StatefulWidget {
   @override
@@ -56,26 +57,64 @@ class MinePageState extends State<MinePage> {
       margin: EdgeInsets.all(10),
       padding: EdgeInsets.only(top: 30, bottom: 15),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Text(
             '登录知乎，体验更多功能',
             style: AppTheme.textStyleFont18Weight700,
           ),
+          SizedBox(height: 10),
           Flex(
             direction: Axis.horizontal,
             children: <Widget>[
-              Expanded(child: Icon(Icons.accessible)),
-              Expanded(child: Icon(Icons.accessible)),
-              Expanded(child: Icon(Icons.accessible)),
-              Expanded(child: Icon(Icons.accessible)),
+              Expanded(
+                  child: FlatButton(
+                      onPressed: () {},
+                      child: Image.asset('assets/group_ic_wechat_nor.png'))),
+              Expanded(
+                  child: FlatButton(
+                      onPressed: () {},
+                      child: Image.asset('assets/group_ic_wechat_nor.png'))),
+              Expanded(
+                  child: FlatButton(
+                      onPressed: () {},
+                      child: Image.asset('assets/group_ic_wechat_nor.png'))),
+              Expanded(
+                  child: FlatButton(
+                      onPressed: () {},
+                      child: Image.asset('assets/group_ic_wechat_nor.png'))),
             ],
           ),
-          Text(
-            '其他方式登录',
-            style: TextStyle(fontSize: 13, color: AppTheme.color7),
-          ),
+          SizedBox(height: 10),
+          Text('其他方式登录',
+              style: TextStyle(fontSize: 13, color: AppTheme.color7)),
         ],
       ),
+    );
+  }
+
+  buildTopViewItem(String count, String text, VoidCallback onTap) {
+    return GestureDetector(
+      child: Column(
+        children: <Widget>[
+          Text(count, style: AppTheme.textStyleFont18Weight700),
+          Text(text, style: TextStyle(fontSize: 13)),
+        ],
+      ),
+      onTap: onTap,
+    );
+  }
+
+  buildTopView() {
+    Widget line = Container(width: 1, height: 30, color: AppTheme.color6);
+
+    return Flex(
+      direction: Axis.horizontal,
+      children: <Widget>[
+        Expanded(child: buildTopViewItem('5', '我关注的', () {})),
+        Expanded(child: buildTopViewItem('5', '收藏夹', () {})),
+        Expanded(child: buildTopViewItem('5', '最近浏览', () {})),
+      ],
     );
   }
 
@@ -83,10 +122,24 @@ class MinePageState extends State<MinePage> {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: buildNavigationBar(),
-      child: ListView(
-        children: <Widget>[
-          buildUnLoginView(),
-        ],
+      child: Container(
+        margin: EdgeInsets.only(bottom: kBottomNavigationBarHeight - 6),
+        child: ListView(
+          children: <Widget>[
+            SeperateLine(),
+            buildUnLoginView(),
+            SizedBox(height: 20),
+            buildTopView(),
+            SeperateLine(),
+            Material(
+              child: ListTile(
+                leading: Icon(Icons.access_alarm),
+                title: Text('我的书架'),
+                trailing: Icon(Icons.keyboard_arrow_right),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
