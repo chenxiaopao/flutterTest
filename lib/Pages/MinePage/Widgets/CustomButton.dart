@@ -12,7 +12,7 @@ class CustomButton extends StatelessWidget {
       child: Column(
         children: <Widget>[
           image,
-          Text(text),
+          Text(text,style: TextStyle(fontSize: 14),),
         ],
       ),
     );
