@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_zhihu_app/Pages/MinePage/Widgets/CustomButton.dart';
 import 'package:flutter_zhihu_app/Configs/theme.dart';
 import 'package:flutter_zhihu_app/Widgets/seperateLine.dart';
+import 'package:flutter_zhihu_app/Pages/MinePage/testPage.dart';
 
 class MinePage extends StatefulWidget {
   @override
@@ -13,6 +14,8 @@ class MinePage extends StatefulWidget {
 
 class MinePageState extends State<MinePage> {
   double overWidth = 100;
+  ScrollPhysics _physics = AlwaysScrollableScrollPhysics();
+  bool isJump = false;
 
   buildNavigationBar() {
     return CupertinoNavigationBar(
@@ -179,8 +182,12 @@ class MinePageState extends State<MinePage> {
               .abs();
 
       if (width > overWidth) {
+        setState(() {
+          isJump = true;
+        });
 
-        print('松开进入');
+//          _physics = NeverScrollableScrollPhysics();
+
       }
     }
   }
@@ -205,18 +212,37 @@ class MinePageState extends State<MinePage> {
             ),
           ),
           SizedBox(width: 10),
-          SizedBox(
-            height: 100,
-            child: NotificationListener(
-              onNotification: scrollNotificationHandler,
-              child: SingleChildScrollView(
+          Listener(
+            onPointerUp: (event) {
+
+              if (isJump){
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return TestPage();
+                }));
+              }
+
+//              if (_physics is NeverScrollableScrollPhysics) {
+//                print('进去');
+//                Navigator.of(context)
+//                    .push(MaterialPageRoute(builder: (context) {
+//                  return TestPage();
+//                }));
+//              }
+            },
+            child: SizedBox(
+              height: 100,
+              child: NotificationListener(
+                onNotification: scrollNotificationHandler,
+                child: SingleChildScrollView(
+                  physics: _physics,
                   scrollDirection: Axis.horizontal,
                   child: Stack(
                     alignment: Alignment(2, 0),
                     children: <Widget>[
                       Positioned(
                         child: Container(
-                          width: 300,
+                          width: 310,
                           height: 100,
                           color: AppTheme.color6,
                         ),
@@ -254,7 +280,8 @@ class MinePageState extends State<MinePage> {
                               color: AppTheme.color6,
                             ),
                             child: Container(
-                              margin: EdgeInsets.only(left: 15,top: 5,bottom: 5),
+                              margin:
+                                  EdgeInsets.only(left: 15, top: 5, bottom: 5),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
@@ -269,7 +296,9 @@ class MinePageState extends State<MinePage> {
                         ],
                       ),
                     ],
-                  )),
+                  ),
+                ),
+              ),
             ),
           ),
         ],
@@ -277,7 +306,7 @@ class MinePageState extends State<MinePage> {
     );
   }
 
-  text(String text){
+  text(String text) {
     return Text(
       text,
       style: TextStyle(
@@ -307,6 +336,17 @@ class MinePageState extends State<MinePage> {
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    print(2);
+    super.dispose();
   }
 }
 //                child: GridView(
