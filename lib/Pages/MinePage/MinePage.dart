@@ -192,7 +192,7 @@ class MinePageState extends State<MinePage> {
     }
   }
 
-  buildBottomViewItem() {
+  buildBottomViewItem(bool isVideo,String title,String subTitle) {
     return Container(
       height: 160,
       color: AppTheme.color1,
@@ -204,8 +204,8 @@ class MinePageState extends State<MinePage> {
             child: Row(
               children: <Widget>[
                 Icon(Icons.map),
-                Expanded(child: Text('视频制作')),
-                Text('拍一个',
+                Expanded(child: Text(title)),
+                Text(subTitle,
                     style: TextStyle(fontSize: 15, color: AppTheme.color6)),
                 Icon(Icons.keyboard_arrow_right, color: AppTheme.color6),
               ],
@@ -267,7 +267,7 @@ class MinePageState extends State<MinePage> {
                                 fit: BoxFit.fill),
                           ),
                           SizedBox(width: 10),
-                          Container(
+                          isVideo ? Container(
                             width: 80,
                             height: 100,
                             decoration: ShapeDecoration(
@@ -281,7 +281,7 @@ class MinePageState extends State<MinePage> {
                             ),
                             child: Container(
                               margin:
-                                  EdgeInsets.only(left: 15, top: 5, bottom: 5),
+                              EdgeInsets.only(left: 15, top: 5, bottom: 5),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
@@ -292,7 +292,19 @@ class MinePageState extends State<MinePage> {
                                 ],
                               ),
                             ),
-                          ),
+                          ) : Row(children: <Widget>[
+                            Container(
+                              width: MediaQuery.of(context).size.width - 150,
+                              child: Image.asset('assets/group_bg_invite_nor.png',
+                                  fit: BoxFit.fill),
+                            ),
+                            SizedBox(width: 10),
+                            Container(
+                              width: MediaQuery.of(context).size.width - 150,
+                              child: Image.asset('assets/group_bg_invite_nor.png',
+                                  fit: BoxFit.fill),
+                            ),
+                          ],)
                         ],
                       ),
                     ],
@@ -331,7 +343,8 @@ class MinePageState extends State<MinePage> {
             SeperateLine(),
             buildMiddleView(),
             SeperateLine(),
-            buildBottomViewItem(),
+            buildBottomViewItem(false,'想法','去往想法首页'),
+            buildBottomViewItem(true,'视频制作','拍一个'),
           ],
         ),
       ),
